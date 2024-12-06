@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <title>Airline Ticket Booking System</title>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1 class="text-center">Airline Ticket Booking System</h1>
+
+    <h2>Login & Register</h2>
+    <p class="lead">Already Have an Account? <a href="/login">Login</a></p>
+    <p class="lead">New User? <a href="/register">Register</a></p>
+
+    <h3>All flights:</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Airline Name</th>
+          <th>Flight Number</th>
+          <th>Departure Airport</th>
+          <th>Arrival Airport</th>
+          <th>Departure Time</th>
+          <th>Arrival Time</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Airplane ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for line in flights %}
+        <tr>
+          <td>{{line['airline_name']}}</td>
+          <td>{{line['flight_num']}}</td>
+          <td>{{line['departure_airport']}}</td>
+          <td>{{line['arrival_airport']}}</td>
+          <td>{{line['departure_time']}}</td>
+          <td>{{line['arrival_time']}}</td>
+          <td>{{line['price']}}</td>
+          <td>{{line['status']}}</td>
+          <td>{{line['airplane_id']}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

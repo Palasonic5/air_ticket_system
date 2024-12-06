@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <title>Grant New Permission to Airline Staff</title>
+  <style>
+    table, th, td {
+      border: 0.5px solid black;
+    }
+  </style>
+</head>
+
+<body class="container mt-5">
+
+  <h2>Grant New Permission to Airline Staff</h2>
+
+  <h3>Current Staff in Your Airline with Permissions:</h3>
+
+  <h4>Admin Permission:</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Staff Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line in admin_staff %}
+      <tr>
+        <td>{{line['staff_username']}}</td>
+        <td>{{line['staff_first']}}</td>
+        <td>{{line['staff_last']}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h4>Operator Permission:</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Staff Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line in operator_staff %}
+      <tr>
+        <td>{{line['staff_username']}}</td>
+        <td>{{line['staff_first']}}</td>
+        <td>{{line['staff_last']}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>Add or Delete Staff's Permission:</h3>
+  <form action="/home/airline_staff_grant_new_permission" method="POST" class="mb-3">
+    <div class="form-group">
+      <label for="op">Operation:</label>
+      <select name="op" class="form-control" required>
+        <option value="">--Select an Operation--</option>
+        <option value="add">Add a Permission</option>
+        <option value="del">Delete a Permission</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="permission">Permission:</label>
+      <select name="permission" class="form-control" required>
+        <option value="">--Select a Permission--</option>
+        <option value="admin">Admin</option>
+        <option value="operator">Operator</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="selected_staff">Select Staff in Your Airline:</label>
+      <select name="selected_staff" class="form-control" required>
+        <option value="">--Select Staff in Your Airline--</option>
+        {% for s in staff_lst %}
+        <option value={{loop.index0}}> {{s['username']}} </option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    {% if error %}
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-danger mt-3" role="alert">
+      Error: {{ message }}
+    </div>
+    {% endfor %}
+    {% else %}
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-success mt-3" role="alert">
+      Success! {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+  </form>
+
+  <a href="/home" class="btn btn-secondary">Go back</a>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

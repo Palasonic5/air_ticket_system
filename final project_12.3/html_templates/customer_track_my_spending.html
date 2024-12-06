@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Spending</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style type="text/css">
+        table, th, td {
+            border: 0.5px solid black;
+        }
+    </style>
+    <!-- Custom JavaScript -->
+    <script>
+        function hideAndShow() {
+            let f1, f2;
+            if (document.getElementById('customize').checked) {
+                f1 = "none";
+                f2 = "block";
+            } else if (document.getElementById('default').checked) {
+                f1 = "block";
+                f2 = "none";
+            }
+            document.getElementById('defaultDisplay').style.display = f1;
+            document.getElementById('customizeDisplay').style.display = f2;
+        }
+    </script>
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h2>Track Your Spending</h2>
+
+    <h3>Select the Period You Want to View:</h3>
+    <form action="/home/customer_track_my_spending" method="POST">
+        <div class="mb-3">
+            <input type="radio" id="default" name="method_select" value="default" checked="checked" onclick="hideAndShow()">
+            <label class="form-check-label" for="default">Last 6 Months</label><br>
+
+            <input type="radio" id="customize" name="method_select" value="customize" onclick="hideAndShow()">
+            <label class="form-check-label" for="customize">Customize Time Range</label><br>
+        </div>
+
+        <div id="defaultDisplay" style="display: none;">
+        </div>
+
+        <div id="customizeDisplay" style="display: none;">
+            <div class="mb-3">
+                <label for="start" class="form-label">Purchase Date starts from:</label>
+                <input type="date" name="range_start" class="form-control" min="1971-01-01">
+            </div>
+            <div class="mb-3">
+                <label for="end" class="form-label">Purchase Date ends at:</label>
+                <input type="date" name="range_end" class="form-control" min="1971-01-01">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <h3>Spending Report {{period_string}}:</h3>
+
+    {% if empty %}
+    {% for message in get_flashed_messages() %}
+    <h3 class="text-warning">Warning: {{ message }}</h3>
+    {% endfor %}
+    {% else %}
+    <h4>Money Spent</h4>
+    <img src="data:image/png;base64, {{ plot_url }}" class="img-fluid" alt="Spending Chart">
+    {% endif %}
+
+    <br>
+    <a href="/home" class="btn btn-secondary">Go back</a>
+</div>
+
+<!-- Bootstrap JS (optional, if you need Bootstrap JavaScript features) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

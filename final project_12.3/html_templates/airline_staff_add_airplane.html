@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <title>Add New Airplane</title>
+</head>
+
+<body class="container mt-5">
+
+  <h2 class="mb-4">Add a New Airplane for Your Airline</h2>
+
+  <h3 class="mb-3">Existing Airplanes in Your Airline: {{airline_name}}</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Airplane ID</th>
+        <th>Number of Seats</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line in airplane %}
+      <tr>
+        <td>{{line['airplane_id']}}</td>
+        <td>{{line['seats']}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3 class="mb-3">Fill in Information for the New Airplane:</h3>
+  <form action="/home/airline_staff_add_airplane" method="POST">
+    <div class="form-group">
+      <input type="number" name="airplane_id" class="form-control" placeholder="Airplane ID" required/>
+    </div>
+    <div class="form-group">
+      <input type="number" name="seats" class="form-control" placeholder="Number of Seats" required/>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+
+    {% if error %}
+      {% for message in get_flashed_messages() %}
+      <div class="alert alert-danger mt-3" role="alert">
+        Error: {{ message }}
+      </div>
+      {% endfor %}
+    {% else %}
+      {% for message in get_flashed_messages() %}
+      <div class="alert alert-success mt-3" role="alert">
+        Success! {{ message }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  </form>
+
+  <br>
+  <a href="/home" class="btn btn-secondary mt-3">Go back</a>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

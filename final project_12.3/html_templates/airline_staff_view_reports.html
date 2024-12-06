@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script>
+        function hide_and_show() {
+            let f1, f2, f3;
+            if (document.getElementById('customize').checked) {
+                f1 = "none";
+                f2 = "none";
+                f3 = "block";
+            } else if (document.getElementById('year').checked) {
+                f1 = "none";
+                f2 = "block";
+                f3 = "none";
+            } else if (document.getElementById('month').checked) {
+                f1 = "block";
+                f2 = "none";
+                f3 = "none";
+            }
+            document.getElementById('month_display').style.display = f1;
+            document.getElementById('year_display').style.display = f2;
+            document.getElementById('customized_display').style.display = f3;
+        }
+    </script>
+</head>
+
+<body class="container mt-5">
+
+    <h2>View Ticket-Selling Reports</h2>
+
+    <h3>Select the Period You Want to View:</h3>
+    <form action="/home/airline_staff_view_reports" method="POST" class="form-group">
+        <div class="form-check">
+            <input type="radio" id="month" name="period_select" value="MONTH" checked="checked" onclick="hide_and_show()" class="form-check-input">
+            <label for="month" class="form-check-label">Recent 1 Month</label><br>
+        </div>
+        <div class="form-check">
+            <input type="radio" id="year" name="period_select" value="YEAR" onclick="hide_and_show()" class="form-check-input">
+            <label for="year" class="form-check-label">Recent 1 Year</label><br>
+        </div>
+        <div class="form-check">
+            <input type="radio" id="customize" name="period_select" value="customize" onclick="hide_and_show()" class="form-check-input">
+            <label for="customize" class="form-check-label">Customize Time Range</label><br>
+        </div>
+
+        <div id="month_display" style="display: none;">
+        </div>
+        <div id="year_display" style="display: none;">
+        </div>
+        <div id="customized_display" style="display: none;">
+            <label for="start">Purchase date starts from:</label>
+            <input type="date" name="range_start" min="1971-01-01" class="form-control">
+            <label for="end">Purchase date ends at:</label>
+            <input type="date" name="range_end" min="1971-01-01" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <h3>Bar Chart Report {{period_string}}:</h3>
+
+    {% if empty %}
+        {% for message in get_flashed_messages() %}
+            <h3>Warning: {{ message }}</h3>
+        {% endfor %}
+    {% else %}
+        <h4>Number of Tickets Sold</h4>
+        <img src="data:image/png;base64, {{ plot_url_1 }}" class="img-fluid">
+
+        <h4>Ticket Profits Earned</h4>
+        <img src="data:image/png;base64, {{ plot_url_2 }}" class="img-fluid">
+    {% endif %}
+
+    <br>
+    <a href="/home" class="btn btn-secondary">Go back</a>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

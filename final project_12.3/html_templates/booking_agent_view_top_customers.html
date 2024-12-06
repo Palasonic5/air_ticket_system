@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        table,
+        th,
+        td {
+            border: 0.5px solid black;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .warning {
+            color: red;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+    <title>View Top Customers</title>
+</head>
+
+<body class="container">
+
+    <h2>View Top Customers</h2>
+
+    <h3>Customers with Most Number of Tickets in Last 6 Months</h3>
+    {% if empty_1 %}
+    <h3 class="warning">Warning: There Is NO Data, NO Bar Chart Available!</h3>
+    {% else %}
+    <img src="data:image/png;base64, {{ plot_url_1 }}" alt="Bar Chart 1">
+    {% endif %}
+
+    <h3>Customers with Most Commission Received in Last Year</h3>
+    {% if empty_2 %}
+    <h3 class="warning">Warning: There Is NO Data, NO Bar Chart Available!</h3>
+    {% else %}
+    <img src="data:image/png;base64, {{ plot_url_2 }}" alt="Bar Chart 2">
+    {% endif %}
+
+    <a href="/home" class="btn btn-secondary">Go back</a>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

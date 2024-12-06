@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        table,
+        th,
+        td {
+            border: 0.5px solid black;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input[type="date"] {
+            width: 180px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        table {
+            margin-top: 20px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
+    <title>Search For Flights</title>
+</head>
+
+<body class="container">
+
+    <h2>Search For Flights</h2>
+
+    <h3>Filters:</h3>
+    <form action="/home/customer_search_for_flights" method="POST">
+        <label for="start">Departure date starts from:</label>
+        <input type="date" name="range_start">
+        <br>
+        <label for="end">Departure date ends at:</label>
+        <input type="date" name="range_end">
+
+        <p>
+            <label for="departure">Departure City and Airport:</label>
+            {% for d in departure_airport_city %}
+            <input type="checkbox" name="departure: {{loop.index0}}">{{d['departure_city']}}, {{d['depart_airport']}}
+            {% endfor %}
+        </p>
+
+        <p>
+            <label for="arrival">Arrival City and Airport:</label>
+            {% for a in arrival_airport_city %}
+            <input type="checkbox" name="arrival: {{loop.index0}}">{{a['arrival_city']}}, {{a['arr_airport']}}
+            {% endfor %}
+        </p>
+
+        <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
+
+    <h3>Search Results:</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Airline Name</th>
+                <th>Flight Number</th>
+                <th>Departure Airport</th>
+                <th>Arrival Airport</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Airplane ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for line in flights %}
+            <tr>
+                <td>{{line['airline_name']}}</td>
+                <td>{{line['flight_num']}}</td>
+                <td>{{line['departure_airport']}}</td>
+                <td>{{line['arrival_airport']}}</td>
+                <td>{{line['departure_time']}}</td>
+                <td>{{line['arrival_time']}}</td>
+                <td>{{line['price']}}</td>
+                <td>{{line['status']}}</td>
+                <td>{{line['airplane_id']}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Purchase Tickets</h2>
+    <form action="/home/customer_purchase_tickets" method="POST">
+        <div class="form-group">
+            <label for="airline_name">Airline Name:</label>
+            <input type="text" class="form-control" name="airline_name" placeholder="Airline Name" required>
+        </div>
+        <div class="form-group">
+            <label for="flight_num">Flight Number:</label>
+            <input type="number" class="form-control" name="flight_num" placeholder="Flight Number" required>
+        </div>
+        <input type="submit" class="btn btn-success" value="Purchase">
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {% for message in get_flashed_messages() %}
+            {{ message }}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-success" role="alert">
+            {% for message in get_flashed_messages() %}
+            {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </form>
+
+    <a href="/home" class="btn btn-secondary">Go back</a>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

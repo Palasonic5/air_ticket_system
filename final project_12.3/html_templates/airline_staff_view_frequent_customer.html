@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <title>View Frequent Customers</title>
+  <style>
+    table,
+    th,
+    td {
+      border: 0.5px solid black;
+    }
+  </style>
+</head>
+
+<body class="container mt-5">
+
+  <h2>View Frequent Customers</h2>
+
+  <h3>Top 5 Customers in the Recent Year:</h3>
+
+  <h4>Number of Tickets Purchased</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Customer Email</th>
+        <th>Number of Tickets</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line in top_5_customer_num_ticket %}
+      <tr>
+        <td>{{ line['customer_email'] }}</td>
+        <td>{{ line['number_of_tickets'] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h4>Amount of Money Spent</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Customer Email</th>
+        <th>Money Spent</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line in top_5_customer_money %}
+      <tr>
+        <td>{{ line['customer_email'] }}</td>
+        <td>{{ line['money_spent'] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>Select the Customer You want to Inspect:</h3>
+  <form action="/home/airline_staff_view_frequent_customer" method="POST">
+    <div class="form-group">
+      <label for="selected_customer">Select Customer Email:</label>
+      <select name="selected_customer" class="form-control" required>
+        <option value="">--Select Customer Email--</option>
+        {% for c in customers %}
+        <option value={{loop.index0}}> {{c['customer_email']}} </option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+
+    {% if info %}
+    <h4>Purchased Tickets of Customer: {{ customer_email }}</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Purchase Date</th>
+          <th>Flight Number</th>
+          <th>Airplane ID</th>
+          <th>Departure Airport</th>
+          <th>Arrival Airport</th>
+          <th>Departure Time</th>
+          <th>Arrival Time</th>
+          <th>Price</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for line in info %}
+        <tr>
+          <td>{{ line['purchase_date'] }}</td>
+          <td>{{ line['flight_num'] }}</td>
+          <td>{{ line['airplane_id'] }}</td>
+          <td>{{ line['departure_airport'] }}</td>
+          <td>{{ line['arrival_airport'] }}</td>
+          <td>{{ line['departure_time'] }}</td>
+          <td>{{ line['arrival_time'] }}</td>
+          <td>{{ line['price'] }}</td>
+          <td>{{ line['status'] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </form>
+
+  <a href="/home" class="btn btn-secondary mt-3">Go back</a>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

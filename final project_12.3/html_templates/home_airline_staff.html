@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome, Airline Staff: {{name}}!</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style type="text/css">
+        body {
+            padding: 20px;
+        }
+        a {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Welcome, Airline Staff: {{name}}!</h2>
+
+    <a href="/home/airline_staff_view_my_flights" class="btn btn-primary">View My Flights</a>
+    <a href="/home/airline_staff_create_new_flight" class="btn btn-primary">Create a New Flight</a>
+    <a href="/home/airline_staff_change_flight_status" class="btn btn-primary">Change Status of a Flight</a>
+    <a href="/home/airline_staff_add_airplane" class="btn btn-primary">Add an Airplane</a>
+    <a href="/home/airline_staff_add_airport" class="btn btn-primary">Add an Airport</a>
+    <a href="/home/airline_staff_view_booking_agent" class="btn btn-primary">View Booking Agents</a>
+    <a href="/home/airline_staff_view_frequent_customer" class="btn btn-primary">View Frequent Customers</a>
+    <a href="/home/airline_staff_view_reports" class="btn btn-primary">View Reports</a>
+    <a href="/home/airline_staff_compare_revenue" class="btn btn-primary">Comparison of Revenue Earned</a>
+    <a href="/home/airline_staff_view_top_destination" class="btn btn-primary">View Top Destinations</a>
+    <a href="/home/airline_staff_grant_new_permission" class="btn btn-primary">Grant New Permissions to Airline Staff</a>
+    <a href="/home/airline_staff_add_booking_agent" class="btn btn-primary">Add/Delete Booking Agent for My Airline</a>
+    <br><br><br>
+    <a href="/logout" class="btn btn-danger">Logout</a>
+
+    {% for message in get_flashed_messages() %}
+        <h3 class="text-danger">Error: {{ message }}</h3>
+    {% endfor %}
+
+    <!-- Bootstrap JS (optional, if you need Bootstrap JavaScript features) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

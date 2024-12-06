@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        table,
+        th,
+        td {
+            border: 0.5px solid black;
+        }
+    </style>
+    <title>View Your Commission</title>
+</head>
+
+<body class="container mt-5">
+
+    <h2>View Your Commission</h2>
+    <h3>Filters:</h3>
+    <form action="/home/booking_agent_view_my_commission" method="POST">
+        <div class="form-group">
+            <label for="start">Departure date starts from:</label>
+            <input type="date" name="range_start" min="1971-01-01" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="end">Departure date ends at:</label>
+            <input type="date" name="range_end" min="1971-01-01" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <h3>The total commission is:</h3>
+    <h3>{{total_commission}}</h3>
+    <h3>The number of tickets is:</h3>
+    <h3>{{ticket_num}}</h3>
+    <h3>The average commission is:</h3>
+    <h3>{{avg_commission}}</h3>
+
+    <br>
+    <a href="/home" class="btn btn-secondary">Go back</a>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

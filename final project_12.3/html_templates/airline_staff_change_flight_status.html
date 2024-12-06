@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <title>Change Flight Status</title>
+  <style>
+    table, th, td {
+      border: 0.5px solid black;
+    }
+  </style>
+</head>
+
+<body class="container mt-5">
+
+  <h2>Change Flight Status</h2>
+
+  <h3>Current Flights:</h3>
+
+  <h4>Upcoming Flights:</h4>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Airline Name</th>
+        <th>Flight Number</th>
+        <th>Airplane ID</th>
+        <th>Departure Airport</th>
+        <th>Arrival Airport</th>
+        <th>Departure Time</th>
+        <th>Arrival Time</th>
+        <th>Price</th>
+        <th>Onboarding Customers</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line in upcoming_flights %}
+      <tr>
+        <td>{{line['airline_name']}}</td>
+        <td>{{line['flight_num']}}</td>
+        <td>{{line['airplane_id']}}</td>
+        <td>{{line['departure_airport']}}</td>
+        <td>{{line['arrival_airport']}}</td>
+        <td>{{line['departure_time']}}</td>
+        <td>{{line['arrival_time']}}</td>
+        <td>{{line['price']}}</td>
+        <td>{{line['customers']}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h4>In-progress Flights:</h4>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Airline Name</th>
+        <th>Flight Number</th>
+        <th>Airplane ID</th>
+        <th>Departure Airport</th>
+        <th>Arrival Airport</th>
+        <th>Departure Time</th>
+        <th>Arrival Time</th>
+        <th>Price</th>
+        <th>Onboarding Customers</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line in progress_flights %}
+      <tr>
+        <td>{{line['airline_name']}}</td>
+        <td>{{line['flight_num']}}</td>
+        <td>{{line['airplane_id']}}</td>
+        <td>{{line['departure_airport']}}</td>
+        <td>{{line['arrival_airport']}}</td>
+        <td>{{line['departure_time']}}</td>
+        <td>{{line['arrival_time']}}</td>
+        <td>{{line['price']}}</td>
+        <td>{{line['customers']}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h4>Delayed Flights:</h4>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Airline Name</th>
+        <th>Flight Number</th>
+        <th>Airplane ID</th>
+        <th>Departure Airport</th>
+        <th>Arrival Airport</th>
+        <th>Departure Time</th>
+        <th>Arrival Time</th>
+        <th>Price</th>
+        <th>Onboarding Customers</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line in delayed_flights %}
+      <tr>
+        <td>{{line['airline_name']}}</td>
+        <td>{{line['flight_num']}}</td>
+        <td>{{line['airplane_id']}}</td>
+        <td>{{line['departure_airport']}}</td>
+        <td>{{line['arrival_airport']}}</td>
+        <td>{{line['departure_time']}}</td>
+        <td>{{line['arrival_time']}}</td>
+        <td>{{line['price']}}</td>
+        <td>{{line['customers']}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>Change a Flight's Status:</h3>
+  <form action="/home/airline_staff_change_flight_status" method="POST">
+    <div class="form-group">
+      <label for="flight_num">Flight Number:</label>
+      <input type="number" name="flight_num" class="form-control" placeholder="Flight Number" required/>
+    </div>
+    <div class="form-group">
+      <label for="status">Change Flight Status:</label>
+      <select name="status" class="form-control" required>
+        <option value="">--Change Flight Status--</option>
+        <option value="Upcoming">Upcoming</option>
+        <option value="In-progress">In-progress</option>
+        <option value="Delayed">Delayed</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    {% if error %}
+      {% for message in get_flashed_messages() %}
+      <div class="alert alert-danger mt-3" role="alert">
+        Error: {{ message }}
+      </div>
+      {% endfor %}
+    {% else %}
+      {% for message in get_flashed_messages() %}
+      <div class="alert alert-success mt-3" role="alert">
+        Success! {{ message }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  </form>
+
+  <br>
+  <a href="/home" class="btn btn-secondary mt-3">Go back</a>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <title>Create a New Flight</title>
+  <style>
+    table, th, td {
+      border: 0.5px solid black;
+    }
+  </style>
+</head>
+
+<body class="container mt-5">
+
+  <h2>Create a New Flight</h2>
+
+  <h3>Upcoming Flights in 30 Days:</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Airline Name</th>
+        <th>Flight Number</th>
+        <th>Airplane ID</th>
+        <th>Departure Airport</th>
+        <th>Arrival Airport</th>
+        <th>Departure Time</th>
+        <th>Arrival Time</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Onboarding Customers</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line in flights %}
+      <tr>
+        <td>{{line['airline_name']}}</td>
+        <td>{{line['flight_num']}}</td>
+        <td>{{line['airplane_id']}}</td>
+        <td>{{line['departure_airport']}}</td>
+        <td>{{line['arrival_airport']}}</td>
+        <td>{{line['departure_time']}}</td>
+        <td>{{line['arrival_time']}}</td>
+        <td>{{line['price']}}</td>
+        <td>{{line['status']}}</td>
+        <td>{{line['customers']}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>Fill in Information for Your New Flight:</h3>
+  <form action="/home/airline_staff_create_new_flight" method="POST">
+    <div class="form-group">
+      <label for="flight_num">Flight Number:</label>
+      <input type="number" name="flight_num" class="form-control" placeholder="Flight Number" required/>
+    </div>
+    <div class="form-group">
+      <label for="airplane_id">Airplane ID:</label>
+      <input type="number" name="airplane_id" class="form-control" placeholder="Airplane ID" required/>
+    </div>
+    <div class="form-group">
+      <label for="departure_airport">Departure Airport:</label>
+      <input type="text" name="departure_airport" class="form-control" placeholder="Departure airport" required/>
+    </div>
+    <div class="form-group">
+      <label for="departure_time">Departure Time:</label>
+      <input type="datetime-local" name="departure_time" class="form-control" placeholder="Departure time" required/>
+    </div>
+    <div class="form-group">
+      <label for="arrival_airport">Arrival Airport:</label>
+      <input type="text" name="arrival_airport" class="form-control" placeholder="Arrival airport" required/>
+    </div>
+    <div class="form-group">
+      <label for="arrival_time">Arrival Time:</label>
+      <input type="datetime-local" name="arrival_time" class="form-control" placeholder="Arrival time" required/>
+    </div>
+    <div class="form-group">
+      <label for="price">Price:</label>
+      <input type="number" name="price" class="form-control" placeholder="Price" required/>
+    </div>
+    <div class="form-group">
+      <label for="status">Flight Status:</label>
+      <select name="status" class="form-control" required>
+        <option value="">--Select Flight Status--</option>
+        <option value="Upcoming">Upcoming</option>
+        <option value="In-progress">In-progress</option>
+        <option value="Delayed">Delayed</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+
+    {% if error %}
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-danger" role="alert">
+      Error: {{ message }}
+    </div>
+    {% endfor %}
+    {% else %}
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-success" role="alert">
+      Success! {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+  </form>
+
+  <br>
+  <a href="/home" class="btn btn-secondary mt-3">Go back</a>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
