@@ -5,8 +5,8 @@ navigate to http://127.0.0.1:5000 to interact with the webpage.
 
 Code:
 Demo code for creating table and inserting demo data
-【update1】 from last time: use trigger in creating customer file
-【update2】the interface for change flight status can display all flights that belongs to the operator’s airline
+- 【update1】 from last time: use trigger in creating customer file
+- 【update2】the interface for change flight status can display all flights that belongs to the operator’s airline
 
 Templates:
 Html templates, the name of the template is pretty straightforward.
